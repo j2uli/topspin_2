@@ -23,5 +23,18 @@ sequelize.sync()
   .catch((err) => console.error('Error al conectar a la base de datos', err));
 
 // Usar las rutas de usuario (login, register, catalogo)
-app.use(userRoutes);
+app.get('/', (req, res) => {
+  res.render('index');  // Renderiza la vista "index.ejs" cuando accedes a "/"
+});
+
+//ruta para la pagina de reservas
+app.get('/FormularioReservas', (req, res) => {
+  res.render('FormularioReservas');  // Esto renderiza la vista "FormularioReservas.ejs"
+});
+
+//Ruta de la interfaz del administrador de la caja
+app.get('/PanelAdministradorCaja', (req, res) => {
+  res.render('PanelAdministradorCaja');  // Renderiza la vista "PanelAdministradorCaja.ejs"
+});
+
 
