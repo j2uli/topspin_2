@@ -1,16 +1,19 @@
 const express = require('express');
 const app = express();
-const sequelize = require('./config/database'); // Conexión a la base de datos
+const sequelize = require('./config/database');
 const userRoutes = require('./routes/userRoutes');
 
 // Configuración de EJS
 app.set('view engine', 'ejs');
-app.set('views', './src/views');  // Asegúrate de que apunte a la carpeta correcta
+app.set('views', './src/views');
 
-// Middleware para procesar datos de formularios
+// Middlewares
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.use(express.static('public'));  // Archivos estáticos (CSS, imágenes, etc.)
+app.use(express.static('public'));
+
+// RUTAS (debe ir antes del listen)
+app.use(userRoutes);
 
 // Conexión a la base de datos y arranque del servidor
 sequelize.sync()

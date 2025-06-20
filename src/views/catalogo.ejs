@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Catálogo TopSpin Bolivia</title>
+  <link rel="stylesheet" href="/css/catalogo.css" />
+</head>
+<body>
+
+<header>
+  <div>
+    <img src="/img/logo2.jpg" alt="TopSpin Logo" class="logo" />
+  </div>
+
+  <nav>
+    <a href="#">INICIO</a>
+    <a href="#">QUIÉNES SOMOS</a>
+    <a href="#">MANTENIMIENTO</a>
+  </nav>
+
+  <div class="search-cart">
+    <div class="search-box">
+      <input type="search" placeholder="Buscar producto..." />
+      <button aria-label="Buscar">&#128269;</button>
+    </div>
+    <div class="cart">
+      🛒 Total: 0 productos
+    </div>
+
+    <div class="user-menu">
+      <button id="userBtn" aria-haspopup="true" aria-expanded="false">
+        Perfil ▼
+      </button>
+      <ul id="userDropdown" class="dropdown-menu" aria-label="submenu" hidden>
+        <li><a href="#">Ver perfil</a></li>
+        <li><a href="#">Ajustes</a></li>
+        <li><a href="#">Cerrar sesión</a></li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+  <aside>
+    <h3>Categoría</h3>
+    <ul>
+      <li>Raquetas
+        <ul>
+          <li>Raquetball</li>
+          <li>Tenis</li>
+          <li>Padel</li>
+        </ul>
+      </li>
+      <li>Cuerdas
+        <ul>
+          <li>E-Force</li>
+          <li>Wilson</li>
+          <li>Dunlop</li>
+          <li>Tecnifibre</li>
+          <li>Gama</li>
+          <li>Gearbox</li>
+        </ul>
+      </li>
+      <li>Guantes
+        <ul>
+          <li>Gearbox</li>
+          <li>E-force</li>
+          <li>Dunlop</li>
+          <li>Prokenex</li>
+        </ul>
+      </li>
+      <li>Favoritos</li>
+    </ul>
+  </aside>
+
+  <main>
+    <h2>Categoría: Raquetas - Raquetball</h2>
+    <div class="product-grid">
+
+      <% productos.forEach(producto => { %>
+        <div class="product-card">
+          <div class="fav-icon" title="Agregar a favoritos"></div>
+          <img src="<%= producto.imagen %>" alt="<%= producto.nombre %>" />
+          <div class="product-name"><%= producto.nombre %></div>
+          <div class="product-price">Bs. <%= producto.precio %></div>
+          <button class="btn-add-cart">Añadir al carrito</button>
+          <div class="details-link">Ver detalles del producto</div>
+        </div>
+      <% }); %>
+
+      <% if (usuario) { %>
+        <div class="bienvenida">
+          Bienvenido, <%= usuario.nombre %> (<%= usuario.rol %>) 👋
+        </div>
+      <% } else { %>
+        <div class="bienvenida">
+          Bienvenido invitado 👤
+        </div>
+      <% } %>
+
+    </div>
+  </main>
+</div>
+
+</body>
+</html>

@@ -8,12 +8,32 @@ const User = sequelize.define('User', {
   },
   correo: {
     type: DataTypes.STRING,
-    allowNull: false,
-    unique: true
+    unique: true,
+    allowNull: false
   },
   contraseña: {
     type: DataTypes.STRING,
     allowNull: false
+  },
+  telefono: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  direccion: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  rol: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  fecha_nacimiento: {
+    type: DataTypes.DATEONLY,
+    allowNull: false
+  },
+  fecha_registro: {
+    type: DataTypes.DATE,
+    defaultValue: DataTypes.NOW
   }
 });
 

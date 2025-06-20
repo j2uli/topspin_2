@@ -2,29 +2,21 @@ const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/userController');
 
-// Ruta para mostrar el formulario de login
-router.get('/login', userController.renderLogin);
+// LOGIN
+router.get('/login', userController.mostrarLogin);
+router.post('/login', userController.loginUsuario);
 
-// Ruta para procesar el login
-router.post('/login', userController.loginUser);
+// REGISTER
+router.get('/register', userController.mostrarRegister);
+router.post('/register', userController.registrarUsuario);
 
-// Ruta para mostrar el formulario de registro
-router.get('/register', userController.renderRegister);
-
-// Ruta para procesar el registro
-router.post('/register', userController.registerUser);
-
-// Ruta para mostrar el catálogo
 router.get('/catalogo', (req, res) => {
   const productos = [
-    { nombre: 'Raqueta A', precio: 320, imagen: 'https://via.placeholder.com/150' },
-    { nombre: 'Raqueta B', precio: 280, imagen: 'https://via.placeholder.com/150' }
+    { nombre: 'Raqueta TopSpin 3000', precio: 300, imagen: '/img/raqueta1.jpg' },
+    { nombre: 'Guante Gearbox Elite', precio: 85, imagen: '/img/guante1.jpg' }
   ];
-
-  res.render('catalogo', {
-    productos,
-    usuario: req.session.usuario || null // Esto es lo que hace que muestre el usuario logueado si existe
-  });
+  const usuario = { nombre: 'Flavio', rol: 'admin' }; // o null si no quieres mostrarlo
+  res.render('catalogo', { productos, usuario });
 });
 
 module.exports = router;

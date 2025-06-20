@@ -1,62 +1,91 @@
-const User = require('../models/User');
 const bcrypt = require('bcrypt');
+const User = require('../models/User');
 
-// Renderiza la vista del login
-const renderLogin = (req, res) => {
-  res.render('login');  // Asegúrate de tener el archivo login.ejs
+// Mostrar formulario de registro
+exports.mostrarRegister = (req, res) => {
+  const today = new Date().toISOString().split("T")[0];
+  res.render('register', { maxDate: today, notificacion: null });
 };
 
-// Procesa el login
-const loginUser = async (req, res) => {
-  const { correo, contraseña } = req.body;
-
-  try {
-    const user = await User.findOne({ where: { correo } });
-    
-    if (!user) {
-      return res.status(400).send('Correo no encontrado');
-    }
-
-    const match = await bcrypt.compare(contraseña, user.contraseña);
-    
-    if (!match) {
-      return res.status(400).send('Contraseña incorrecta');
-    }
-
-    req.session.usuario = user; // Guardar usuario en la sesión
-    res.redirect('/catalogo'); // Redirigir al catálogo después del login exitoso
-  } catch (error) {
-    res.status(500).send('Error al procesar el login: ' + error.message);
-  }
-};
-
-// Renderiza la vista de registro
-const renderRegister = (req, res) => {
-  res.render('register');  // Asegúrate de tener el archivo register.ejs
-};
-
-// Procesa el registro
-const registerUser = async (req, res) => {
-  const { nombre, correo, contraseña } = req.body;
-
+// Procesar registro de usuario
+exports.registrarUsuario = async (req, res) => {
+  const { nombre, correo, contraseña, telefono, direccion, rol, fecha_nacimiento } = req.body;
   try {
     const hashedPassword = await bcrypt.hash(contraseña, 10);
-    
+
     await User.create({
       nombre,
       correo,
-      contraseña: hashedPassword
+      contraseña: hashedPassword,
+      telefono,
+      direccion,
+      rol,
+      fecha_nacimiento
     });
 
-    res.redirect('/login'); // Redirigir a login después del registro exitoso
+    res.render('register', {
+      maxDate: new Date().toISOString().split("T")[0],
+      notificacion: {
+        tipo: 'success',
+        mensaje: 'Cuenta creada exitosamente. Ahora puedes iniciar sesión.'
+      }
+    });
   } catch (error) {
-    res.status(500).send('Error al registrar el usuario: ' + error.message);
+    res.render('register', {
+      maxDate: new Date().toISOString().split("T")[0],
+      notificacion: {
+        tipo: 'error',
+        mensaje: 'Hubo un error al registrarse.'
+      }
+    });
   }
 };
 
-module.exports = {
-  renderLogin,
-  loginUser,
-  renderRegister,
-  registerUser
+// Mostrar formulario de login
+exports.mostrarLogin = (req, res) => {
+  res.render('login', { notificacion: null });
+};
+
+// Procesar login de usuario
+exports.loginUsuario = async (req, res) => {
+  const { correo, contraseña, rol } = req.body;
+  try {
+    const user = await User.findOne({ where: { correo, rol } });
+
+    if (!user) {
+      return res.render('login', {
+        notificacion: {
+          tipo: 'error',
+          mensaje: 'Correo o rol incorrecto.'
+        }
+      });
+    }
+
+    const match = await bcrypt.compare(contraseña, user.contraseña);
+    if (!match) {
+      return res.render('login', {
+        notificacion: {
+          tipo: 'error',
+          mensaje: 'Contraseña incorrecta.'
+        }
+      });
+    }
+
+    res.render('login', {
+      notificacion: {
+        tipo: 'success',
+        mensaje: 'Inicio de sesión exitoso.'
+      }
+    });
+
+    // Para redirigir según el rol en vez de mostrar el mensaje:
+    // return res.redirect('/admin/usuarios');
+  } catch (error) {
+    res.render('login', {
+      notificacion: {
+        tipo: 'error',
+        mensaje: 'Error al iniciar sesión: ' + error.message
+      }
+    });
+  }
 };
