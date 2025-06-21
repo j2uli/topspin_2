@@ -14,10 +14,44 @@
   </div>
 
   <nav>
-    <a href="#">INICIO</a>
-    <a href="#">QUIÉNES SOMOS</a>
-    <a href="#">MANTENIMIENTO</a>
+    <a href="/Inicio" class="btn">INICIO</a>
+    <a href="/QuienesSomos" class="btn">NOSOTROS</a>
+
+    <div class="dropdown">
+      <a href="#">CATEGORÍAS</a>
+      <div class="mega-menu">
+        <div class="mega-column">
+          <h4>  RAQUETAS</h4>
+          <a href="#">Raquetball</a>
+          <a href="#">Tenis</a>
+          <a href="#">Padel</a>
+        </div>
+        <div class="mega-column">
+          <h4>Cuerdas</h4>
+          <a href="#">E-Force</a>
+          <a href="#">Wilson</a>
+          <a href="#">Dunlop</a>
+          <a href="#">Tecnifibre</a>
+          <a href="#">Gama</a>
+          <a href="#">GearBox</a>
+        </div>
+        <div class="mega-column">
+          <h4>Guantes</h4>
+          <a href="#">GearBox</a>
+          <a href="#">E-Force</a>
+          <a href="#">Dunlop</a>
+          <a href="#">Prokenex</a>
+        </div>
+      </div>
+    </div>
+
+        <a href="https://api.whatsapp.com/send?phone=59177799444&text=Hola,%20quiero%20más%20información%20sobre%20productos%20TopSpin"
+              target="_blank" rel="noopener noreferrer">
+              CONTACTENOS
+    </a>
+    <a href="#">RESERVAS</a>
   </nav>
+
 
   <div class="search-cart">
     <div class="search-box">
@@ -41,67 +75,104 @@
   </div>
 </header>
 
-<div class="container">
-  <aside>
-    <h3>Categoría</h3>
-    <ul>
-      <li>Raquetas
-        <ul>
-          <li>Raquetball</li>
-          <li>Tenis</li>
-          <li>Padel</li>
-        </ul>
-      </li>
-      <li>Cuerdas
-        <ul>
-          <li>E-Force</li>
-          <li>Wilson</li>
-          <li>Dunlop</li>
-          <li>Tecnifibre</li>
-          <li>Gama</li>
-          <li>Gearbox</li>
-        </ul>
-      </li>
-      <li>Guantes
-        <ul>
-          <li>Gearbox</li>
-          <li>E-force</li>
-          <li>Dunlop</li>
-          <li>Prokenex</li>
-        </ul>
-      </li>
-      <li>Favoritos</li>
-    </ul>
-  </aside>
+<section class="video-banner">
+  <video autoplay muted loop playsinline>
+    <source src="/videos/video Wilson.mp4" type="video/mp4">
+    Tu navegador no soporta videos HTML5.
+  </video>
+  <div class="video-overlay">
+    <h1>Bienvenido a TopSpin Bolivia</h1>
+    <p>Tu tienda de confianza en deportes de raqueta</p>
+  </div>
+</section>
 
-  <main>
-    <h2>Categoría: Raquetas - Raquetball</h2>
-    <div class="product-grid">
-
-      <% productos.forEach(producto => { %>
-        <div class="product-card">
-          <div class="fav-icon" title="Agregar a favoritos"></div>
-          <img src="<%= producto.imagen %>" alt="<%= producto.nombre %>" />
-          <div class="product-name"><%= producto.nombre %></div>
-          <div class="product-price">Bs. <%= producto.precio %></div>
-          <button class="btn-add-cart">Añadir al carrito</button>
-          <div class="details-link">Ver detalles del producto</div>
-        </div>
-      <% }); %>
-
-      <% if (usuario) { %>
-        <div class="bienvenida">
-          Bienvenido, <%= usuario.nombre %> (<%= usuario.rol %>) 👋
-        </div>
-      <% } else { %>
-        <div class="bienvenida">
-          Bienvenido invitado 👤
-        </div>
-      <% } %>
-
+<section class="split-banner">
+  <div class="split-image">
+    <img src="/img/raqueta2.jpg" alt="Colección de verano">
+  </div>
+  <div class="split-text">
+    <h2>HEAD GRAVITY TOUR</h2>
+    <p>Magia sin igual a ninguno, ven y descubre porque el nombre.</p>
+    <div class="buttons">
+      <a href="#" class="btn">ADQUIRIR</a>
+      
     </div>
-  </main>
-</div>
+  </div>
+</section>
+
+<section class="split-banner reverse">
+  <div class="split-text">
+    <h2>Nueva colección de ropa deportiva de pádel</h2>
+    <p>¡Conquista la pista de pádel con estilo! Explora nuestra última colección.</p>
+    <div class="buttons">
+      <a href="#" class="btn">ADQUIRIR</a>
+    </div>
+  </div>
+  <div class="split-image">
+    <img src="/img/PADEL.jpg" alt="Colección de verano">
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="footer-container">
+    <div class="footer-column logo-col">
+      <img src="/img/logo2.jpg" alt="TopSpin Logo">
+    </div>
+
+    <div class="footer-column">
+      <h4>Nosotros</h4>
+      <ul>
+        <a href="/sucursales" class="btn">NUESTRAS SUCURSALES</a>
+
+          <li>
+            <a href="https://api.whatsapp.com/send?phone=59177799444&text=Hola,%20quiero%20más%20información%20sobre%20productos%20TopSpin"
+              target="_blank" rel="noopener noreferrer">
+              Solicita asesor de venta
+            </a>
+          </li>
+              </ul>
+    </div>
+
+    <div class="footer-column">
+      <h4>Información</h4>
+      <ul>
+        <li><a href="/QuienesSomos" class="btn">¿Quienes Somos?</a></li>
+        <li><a href="/ComoComprar" class="btn">¿Cómo comprar?</a></li>
+        <li><a href="/PlazoDeEntrega" class="btn">Plazo de entrega</a></li>
+        <li><a href="/CambiosYDevoluciones" class="btn">Cambios y devoluciones</a></li>
+        <li><a href="/TerminosYCondiciones" class="btn">Términos y condiciones</a></li>
+        <li><a href="/PoliticasDePrivacidad" class="btn">Políticas de privacidad</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-column">
+      <h4>Categorías</h4>
+      <ul>
+        <li><a href="#">Raquetas</a></li>
+        <li><a href="#">Cuerdas</a></li>
+        <li><a href="#">Guantes</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-column">
+      <h4>Clientes</h4>
+      <ul>
+        <li><a href="/Login" class="btn">Ingresar</a></li>
+        <li><a href="#">Mi cuenta</a></li>
+      </ul>
+
+      <h4>Síguenos</h4>
+      <div class="social-icons">
+        <a href="#"><img src="/img/facebook.png" alt="Facebook"></a>
+        <a href="#"><img src="/img/instagram.png" alt="Instagram"></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    © TopSpin Bolivia 2025. Todos los derechos reservados.
+  </div>
+</footer>
 
 </body>
 </html>

@@ -113,6 +113,203 @@
       background-color: #b02b2b;
     }
 
+  /*SSIIIIIIII*/
+  /* Dropdown (Mega menú) */
+header .dropdown {
+  position: relative;
+}
+
+header .dropdown > a {
+  cursor: pointer;
+  color: white;
+  font-weight: 600;
+  padding: 8px 15px;
+  border-radius: 20px;
+  text-decoration: none;
+  transition: background-color 0.3s;
+}
+
+header .dropdown > a:hover {
+  background-color: #b02b2b;
+}
+
+/* Ocultar por defecto */
+header .mega-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 650px;
+  background: white;
+  color: black;
+  padding: 20px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  display: none;
+  flex-wrap: nowrap;
+  border-radius: 10px;
+}
+
+/* Mostrar al hacer hover */
+header .dropdown:hover .mega-menu {
+  display: flex;
+}
+
+/* Columnas del mega menú */
+header .mega-column {
+  display: flex;
+  flex-direction: column;
+  min-width: 180px;
+  padding: 0 10px;
+}
+
+header .mega-column h4 {
+  font-size: 1rem;
+  margin-bottom: 10px;
+  color: #d93535;
+}
+
+header .mega-column a {
+  color: black;
+  text-decoration: none;
+  margin: 5px 0;
+  /*font-size: 0.9rem;*/
+  transition: color 0.2s;
+}
+
+header .mega-column a:hover {
+  color: #d93535;
+}
+
+/*ssssss00*/
+header nav .dropdown {
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+}
+
+header nav .dropdown > a {
+  display: inline-block;
+}
+
+/*VIDEO DE LA PAGINA*/
+.video-banner {
+  position: relative;
+  height: 350px;
+  overflow: hidden;
+  border-radius: 12px;
+  margin: 20px 0;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.video-banner video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.video-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3); /* oscurece para mejor contraste */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-align: center;
+  padding: 0 20px;
+}
+
+.video-overlay h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.video-overlay p {
+  font-size: 1.1rem;
+}
+
+/*formato para publicitar los productos*/
+.split-banner {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: space-between;
+  margin: 40px 0;
+  background-color: #f9f6f0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.split-banner.reverse {
+  flex-direction: row-reverse;
+}
+
+
+.split-image {
+  flex: 1 1 50%;
+}
+
+.split-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.split-text {
+  flex: 1 1 50%;
+  padding: 50px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: #f9f6f0;
+}
+
+.split-text h2 {
+  font-size: 2.4rem;
+  margin-bottom: 20px;
+  color: #111;
+}
+
+.split-text p {
+  font-size: 1.1rem;
+  margin-bottom: 25px;
+  color: #333;
+}
+
+.split-text .buttons {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.split-text .btn {
+  background-color: #111;
+  color: white;
+  text-decoration: none;
+  padding: 12px 25px;
+  font-weight: 700;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.split-text .btn:hover {
+  background-color: #d93535;
+}
+
+@media (max-width: 768px) {
+  .split-banner,
+  .split-banner.reverse {
+    flex-direction: column;
+  }
+}
+
     /* Layout general */
     .container {
       display: flex;
@@ -397,4 +594,75 @@
   margin-bottom: 20px;
   border-radius: 8px;
   text-align: center;
+}
+
+/*footer o pie de pagina*/
+.site-footer {
+  background-color: #fff;
+  color: #222;
+  padding: 40px 20px 20px;
+  font-size: 0.95rem;
+  border-top: 1px solid #ddd;
+}
+
+.footer-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+  gap: 30px;
+}
+
+.footer-column {
+  flex: 1 1 180px;
+}
+
+.logo-col img {
+  max-width: 80px;
+  border-radius: 50%;
+}
+
+.footer-column h4 {
+  font-size: 1.05rem;
+  margin-bottom: 10px;
+  font-weight: bold;
+  color: #111;
+}
+
+.footer-column ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-column ul li {
+  margin-bottom: 6px;
+}
+
+.footer-column ul li a {
+  text-decoration: none;
+  color: #444;
+  transition: color 0.2s;
+}
+
+.footer-column ul li a:hover {
+  color: #d93535;
+}
+
+.social-icons a img {
+  width: 30px;
+  margin-right: 10px;
+  transition: transform 0.2s ease;
+}
+
+.social-icons a img:hover {
+  transform: scale(1.1);
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 30px;
+
+  background-color: #111;
+  color: white;
 }
