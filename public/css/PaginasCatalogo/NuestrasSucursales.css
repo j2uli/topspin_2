@@ -1,0 +1,419 @@
+ * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+    background-image: url('/img/1.jpg'); /* Cambia 'fondo.jpg' por el nombre real de tu imagen */
+    background-size: cover; /* Hace que la imagen cubra toda la pantalla */
+    background-position: center center; /* Centra la imagen */
+    background-repeat: no-repeat; /* Evita que se repita */
+    background-attachment: fixed; /* Hace que el fondo no se mueva al hacer scroll */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f5f5f0;
+    color: #333;
+    line-height: 1.5;
+    padding: 20px;
+    }
+
+    header {
+      background-color: #d93535;
+      padding: 15px 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: white;
+      border-radius: 6px;
+      margin-bottom: 25px;
+      flex-wrap: wrap;
+    }
+
+    header .logo {
+      font-weight: bold;
+      font-size: 1.6rem;
+      font-family: 'Arial Black', Arial, sans-serif;
+    }
+
+    header nav {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+
+    header nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 8px 15px;
+      border-radius: 20px;
+      transition: background-color 0.3s;
+      font-size: 0.95rem;
+    }
+
+    header nav a:hover {
+      background-color: #b02b2b;
+    }
+
+    header .search-cart {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .search-box {
+      position: relative;
+    }
+
+    .search-box input[type="search"] {
+      padding: 8px 40px 8px 15px;
+      border-radius: 20px;
+      border: none;
+      font-size: 1rem;
+      width: 220px;
+      transition: width 0.4s ease;
+    }
+
+    .search-box input[type="search"]:focus {
+      outline: none;
+      width: 280px;
+    }
+
+    .search-box button {
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1.1rem;
+      color: #d93535;
+    }
+
+    .cart {
+      cursor: pointer;
+      background-color: #ff3b3b;
+      padding: 8px 18px;
+      border-radius: 25px;
+      color: white;
+      font-weight: 700;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 2px 5px rgba(217, 53, 53, 0.6);
+      user-select: none;
+      transition: background-color 0.3s;
+    }
+
+    .cart:hover {
+      background-color: #b02b2b;
+    }
+
+  /*SSIIIIIIII*/
+  /* Dropdown (Mega menú) */
+header .dropdown {
+  position: relative;
+}
+
+header .dropdown > a {
+  cursor: pointer;
+  color: white;
+  font-weight: 600;
+  padding: 8px 15px;
+  border-radius: 20px;
+  text-decoration: none;
+  transition: background-color 0.3s;
+}
+
+header .dropdown > a:hover {
+  background-color: #b02b2b;
+}
+
+/* Ocultar por defecto */
+header .mega-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 650px;
+  background: white;
+  color: black;
+  padding: 20px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  display: none;
+  flex-wrap: nowrap;
+  border-radius: 10px;
+}
+
+/* Mostrar al hacer hover */
+header .dropdown:hover .mega-menu {
+  display: flex;
+}
+
+/* Columnas del mega menú */
+header .mega-column {
+  display: flex;
+  flex-direction: column;
+  min-width: 180px;
+  padding: 0 10px;
+}
+
+header .mega-column h4 {
+  font-size: 1rem;
+  margin-bottom: 10px;
+  color: #d93535;
+}
+
+header .mega-column a {
+  color: black;
+  text-decoration: none;
+  margin: 5px 0;
+  /*font-size: 0.9rem;*/
+  transition: color 0.2s;
+}
+
+header .mega-column a:hover {
+  color: #d93535;
+}
+
+/*ssssss00*/
+header nav .dropdown {
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+}
+
+header nav .dropdown > a {
+  display: inline-block;
+}
+
+
+
+
+/*Contenido central*/
+.sucursales-section {
+  background-color: #f9f6f0;
+  padding: 40px 20px;
+  border-radius: 12px;
+  margin: 40px auto;
+  max-width: 1200px;
+}
+
+.sucursales-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.sucursal-lista {
+  flex: 1 1 300px;
+}
+
+.sucursal-lista h2 {
+  margin-bottom: 20px;
+  color: #d93535;
+  font-size: 1.8rem;
+}
+
+.sucursal-item {
+  background: #fff;
+  padding: 15px 20px;
+  margin-bottom: 15px;
+  border-left: 4px solid #d93535;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+.sucursal-item h4 {
+  margin-bottom: 6px;
+  color: #222;
+}
+
+.sucursal-mapa {
+  flex: 2 1 500px;
+  height: 300px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+/*opcion 2 de estilo*/
+.sucursales-page {
+  padding: 40px 20px;
+  background: #f8f6f1;
+}
+
+.sucursales-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+  align-items: stretch;
+}
+
+.sucursales-info {
+  flex: 1 1 320px;
+  background: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.sucursales-info h2 {
+  margin-bottom: 20px;
+  color: #d93535;
+}
+
+.sucursal-card {
+  background: #f5f5f5;
+  padding: 12px 15px;
+  margin-bottom: 15px;
+  border-left: 4px solid #d93535;
+  border-radius: 8px;
+}
+
+.sucursales-map {
+  flex: 2 1 600px;
+  height: 400px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.logo {
+  border-radius: 50%;
+  max-width: 70px;
+  height: 70px; 
+  cursor: pointer;
+  transition: transform 1s ease; /* para hover si quieres */
+}
+
+.logo:hover {
+  transform: rotate(-360deg);
+}
+
+
+.map-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 10px;
+}
+
+.map-buttons button {
+  padding: 10px 15px;
+  background-color: #e63946;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.map-buttons button:hover {
+  background-color: #d62828;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*footer o pie de pagina*/
+.site-footer {
+  background-color: #fff;
+  color: #222;
+  padding: 40px 20px 20px;
+  font-size: 0.95rem;
+  border-top: 1px solid #ddd;
+}
+
+.footer-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+  gap: 30px;
+}
+
+.footer-column {
+  flex: 1 1 180px;
+}
+
+.logo-col img {
+  max-width: 80px;
+  border-radius: 50%;
+}
+
+.footer-column h4 {
+  font-size: 1.05rem;
+  margin-bottom: 10px;
+  font-weight: bold;
+  color: #111;
+}
+
+.footer-column ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-column ul li {
+  margin-bottom: 6px;
+}
+
+.footer-column ul li a {
+  text-decoration: none;
+  color: #444;
+  transition: color 0.2s;
+}
+
+.footer-column ul li a:hover {
+  color: #d93535;
+}
+
+.social-icons a img {
+  width: 30px;
+  margin-right: 10px;
+  transition: transform 0.2s ease;
+}
+
+.social-icons a img:hover {
+  transform: scale(1.1);
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 30px;
+
+  background-color: #111;
+  color: white;
+}

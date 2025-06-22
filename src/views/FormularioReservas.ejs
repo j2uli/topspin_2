@@ -80,44 +80,5 @@
     </form>
   </main>
 </div>
-
-<!-- Modal -->
-<div id="notificacionModal" class="modal-overlay" hidden>
-  <div class="modal-content">
-    <h3>¿Desea recibir la notificación?</h3>
-    <div class="modal-actions">
-      <button id="btnNotificar" class="btn-confirm">Sí</button>
-      <button id="btnCancelar" class="btn-cancel">No</button>
-    </div>
-  </div>
-</div>
-
-<script>
-  const form = document.getElementById('formReserva');
-  const btnMostrarModal = document.getElementById('btnMostrarModal');
-  const modal = document.getElementById('notificacionModal');
-  const btnNotificar = document.getElementById('btnNotificar');
-  const btnCancelar = document.getElementById('btnCancelar');
-
-  // Mostrar modal solo al hacer clic
-  btnMostrarModal.addEventListener('click', () => {
-    console.log("Botón Reservar presionado");
-    modal.removeAttribute('hidden');
-  });
-
-  btnNotificar.addEventListener('click', function () {
-    modal.setAttribute('hidden', '');
-    alert('Te enviaremos una notificación 😉');
-    form.submit();
-  });
-
-  btnCancelar.addEventListener('click', function () {
-    modal.setAttribute('hidden', '');
-    alert('No se enviará notificación.');
-    form.submit();
-  });
-</script>
-
-
 </body>
 </html>

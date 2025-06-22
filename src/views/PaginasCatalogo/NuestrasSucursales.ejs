@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Catálogo TopSpin Bolivia</title>
+  <link rel="stylesheet" href="/css/PaginasCatalogo/NuestrasSucursales.css" />
+</head>
+<body>
+
+<header>
+  <div>
+    <img src="/img/imagenLogo.png" alt="TopSpin Logo" class="logo" />
+  </div>
+
+  <nav>
+    <a href="/Inicio" class="btn">INICIO</a>
+    <a href="/QuienesSomos" class="btn">NOSOTROS</a>
+
+    <div class="dropdown">
+      <a href="#">CATEGORÍAS</a>
+      <div class="mega-menu">
+        <div class="mega-column">
+          <h4><a href="#">RAQUETAS</a></h4>
+          <a href="#">Raquetball</a>
+          <a href="#">Tenis</a>
+          <a href="#">Padel</a>
+        </div>
+        <div class="mega-column">
+          <h4><a href="#">CUERDAS</a></h4>
+          <a href="#">E-Force</a>
+          <a href="#">Wilson</a>
+          <a href="#">Dunlop</a>
+          <a href="#">Tecnifibre</a>
+          <a href="#">Gama</a>
+          <a href="#">GearBox</a>
+        </div>
+        <div class="mega-column">
+          <h4><a href="#">GUANTES</a></h4>
+          <a href="#">GearBox</a>
+          <a href="#">E-Force</a>
+          <a href="#">Dunlop</a>
+          <a href="#">Prokenex</a>
+        </div>
+      </div>
+    </div>
+
+    <a href="https://api.whatsapp.com/send?phone=59177799444&text=Hola,%20quiero%20más%20información%20sobre%20productos%20TopSpin"
+              target="_blank" rel="noopener noreferrer">
+              CONTACTENOS
+    </a>
+    <a href="#">RESERVAS</a>
+  </nav>
+
+
+  <div class="search-cart">
+    <div class="search-box">
+      <input type="search" placeholder="Buscar producto..." />
+      <button aria-label="Buscar">&#128269;</button>
+    </div>
+    <div class="cart">
+      🛒 Total: 0 productos
+    </div>
+
+    <div class="user-menu">
+      <button id="userBtn" aria-haspopup="true" aria-expanded="false">
+        Perfil ▼
+      </button>
+      <ul id="userDropdown" class="dropdown-menu" aria-label="submenu" hidden>
+        <li><a href="#">Ver perfil</a></li>
+        <li><a href="#">Ajustes</a></li>
+        <li><a href="#">Cerrar sesión</a></li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+
+<main class="sucursales-page">
+  <section class="sucursales-wrapper">
+    <div class="sucursales-info">
+      <h2>Nuestras Sucursales</h2>
+
+      <div class="sucursal-card">
+        <h4>TopSpin La Paz</h4>
+        <p>Av Ballivian esq Calle 15, Edificio Oasis del Sur, La Paz.<br>Tel: +591 77799444</p><br>
+    <div class="map-buttons">
+        <button onclick="irALaPaz()">Ver La Paz</button>
+    </div>  
+    </div>
+
+      <div class="sucursal-card">
+        <h4>TopSpin Cochabamba</h4>
+        <p>C/ Junin 382, Cochabamba<br>Tel: +591 77799444</p><br>
+     <div class="map-buttons">
+        <button onclick="irACochabamba()">Ver Cochabamba</button>
+    </div> 
+    </div>
+    </div>
+  
+    <div id="map" class="sucursales-map"></div>
+  </section>
+</main>
+
+<!-- MAPBOX SCRIPTS -->
+<link href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css" rel="stylesheet">
+<script src="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js"></script>
+
+<script>
+  mapboxgl.accessToken = 'pk.eyJ1IjoiYXdlcmVkc29uNyIsImEiOiJjbWM1bmQzMWIwMGs3Mmtwd3o3Y3pyeXBoIn0.cyR4xA0ge7QmgwfDyNpICg';
+
+  const map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/streets-v12',
+    center: [-68.08405302329713, -16.538919002690932], // Centro general Bolivia
+    zoom: 5.2
+  });
+
+  function irALaPaz() {
+  map.flyTo({
+    center: [-68.08405302329713, -16.538919002690932],
+    zoom: 14,
+    speed: 0.8
+  });
+}
+
+function irACochabamba() {
+  map.flyTo({
+    center: [-66.16046965009828, -17.39021024040747],
+    zoom: 14,
+    speed: 0.8
+  });
+}
+
+  // Marcador La Paz
+  new mapboxgl.Marker()
+    .setLngLat([-68.08405302329713, -16.538919002690932])
+    .setPopup(new mapboxgl.Popup().setHTML("<strong>TopSpin La Paz</strong><br>Av Ballivian esq Calle 15, Edificio Oasis del Sur, La Paz"))
+    .addTo(map);
+
+  // Marcador Cochabamba
+  new mapboxgl.Marker({ color: 'red' })
+    .setLngLat([-66.16046965009828, -17.39021024040747])
+    .setPopup(new mapboxgl.Popup().setHTML("<strong>TopSpin Cochabamba</strong><br>C/ Junin 382, Cochabamba"))
+    .addTo(map);
+</script>
+
+
+
+<footer class="site-footer">
+  <div class="footer-container">
+    <div class="footer-column logo-col">
+      <img src="/img/logo2.jpg" alt="TopSpin Logo">
+    </div>
+
+    <div class="footer-column">
+      <h4>Nosotros</h4>
+      <ul>
+        <li><a href="#">Nuestras sucursales</a></li>
+          <li>
+            <a href="https://api.whatsapp.com/send?phone=59177799444&text=Hola,%20quiero%20más%20información%20sobre%20productos%20TopSpin"
+              target="_blank" rel="noopener noreferrer">
+              Solicita asesor de venta
+            </a>
+          </li>
+              </ul>
+    </div>
+
+    <div class="footer-column">
+      <h4>Información</h4>
+      <ul>
+      <ul>
+        <li><a href="/QuienesSomos" class="btn">¿Quienes Somos?</a></li>
+        <li><a href="/ComoComprar" class="btn">¿Cómo comprar?</a></li>
+        <li><a href="/PlazoDeEntrega" class="btn">Plazo de entrega</a></li>
+        <li><a href="/CambiosYDevoluciones" class="btn">Cambios y devoluciones</a></li>
+        <li><a href="/TerminosYCondiciones" class="btn">Términos y condiciones</a></li>
+        <li><a href="/PoliticasDePrivacidad" class="btn">Políticas de privacidad</a></li>
+      </ul>
+      </ul>
+    </div>
+
+    <div class="footer-column">
+      <h4>Categorías</h4>
+      <ul>
+        <li><a href="#">Raquetas</a></li>
+        <li><a href="#">Cuerdas</a></li>
+        <li><a href="#">Guantes</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-column">
+      <h4>Clientes</h4>
+      <ul>
+        <li><a href="#">Ingresar</a></li>
+        <li><a href="#">Mi cuenta</a></li>
+      </ul>
+
+      <h4>Síguenos</h4>
+      <div class="social-icons">
+        <a href="https://www.facebook.com/profile.php?id=100084169115099"><img src="/img/facebook.png" alt="Facebook"></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    © TopSpin Bolivia 2025. Todos los derechos reservados.
+  </div>
+</footer>
+
+</body>
+</html>

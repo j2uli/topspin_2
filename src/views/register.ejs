@@ -54,13 +54,12 @@
     </div>
   </div>
 
+
  <% if (notificacion) { %>
   <div class="notification <%= notificacion.tipo %> show">
     <strong><%= notificacion.tipo === 'success' ? '¡Éxito!' : 'Error' %>:</strong> <%= notificacion.mensaje %>
   </div>
 <% } %>
-
-
 
   <script src="/js/register.js"></script>
 </body>

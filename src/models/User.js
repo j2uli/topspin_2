@@ -1,6 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 
+
 const Usuario = sequelize.define('Usuario', {
   id: {
     type: DataTypes.INTEGER,
@@ -42,3 +43,4 @@ fecha_nacimiento: {
 });
 
 module.exports = Usuario;
+
