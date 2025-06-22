@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Panel de Caja - Admin</title>
+  <link rel="stylesheet" href="/css/PanelAdministradorCaja.css" />
+</head>
+
+<body>
+<aside>
+    <div>
+        <img src="/img/logo2.jpg" alt="TopSpin Logo" class="logo" />
+    </div>
+  <ul>
+    <li>Inicio</li>
+    <li>Transacciones</li>
+    <li>Ingresos</li>
+    <li>Egresos</li>
+    <li><a href="/productos/inventario">Inventario</a></li>
+    <li>Historial</li>
+    <li>Salir</li>
+  </ul>
+</aside>
+
+<main>
+  <header>
+    <h1>Panel de Caja</h1>
+    <div class="user-profile">
+      <span>Admin</span>
+      <img src="/img/usuario.png" alt="Usuario" />
+    </div>
+  </header>
+
+  <div class="summary">
+    <div class="card">
+      <h3>Total en Caja</h3>
+      <p>Bs. 4,250.00</p>
+    </div>
+    <div class="card">
+      <h3>Ingresos Hoy</h3>
+      <p>Bs. 1,300.00</p>
+    </div>
+    <div class="card">
+      <h3>Egresos Hoy</h3>
+      <p>Bs. 550.00</p>
+    </div>
+  </div>
+
+  <section class="acciones">
+    <button class="btn rojo">+ Agregar Ingreso</button>
+    <button class="btn gris">- Registrar Egreso</button>
+  </section>
+
+  <section class="tabla">
+    <h2>Transacciones recientes</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Fecha</th>
+          <th>Tipo</th>
+          <th>Monto</th>
+          <th>Descripción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>2025-06-19</td>
+          <td>Ingreso</td>
+          <td>Bs. 300.00</td>
+          <td>Venta productos</td>
+        </tr>
+        <tr>
+          <td>2025-06-19</td>
+          <td>Egreso</td>
+          <td>Bs. 150.00</td>
+          <td>Compra insumos</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+</main>
+
+</body>
+</html>

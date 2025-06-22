@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Reservas - TopSpin Bolivia</title>
+  <link rel="stylesheet" href="/css/FormularioReservas.css" />
+</head>
+
+<body>
+<header>
+  <div>
+    <img src="/img/imagenLogo.png" alt="TopSpin Logo" class="logo" />
+  </div>
+
+  <nav>
+    <a href="/">INICIO</a>
+    <a href="/quienes-somos">QUIENES SOMOS</a>
+    <a href="/mantenimiento">MANTENIMIENTO</a>
+    <a href="/reservas">RESERVAS</a>
+  </nav>
+
+  <div class="search-cart">
+    <div class="search-box">
+      <input type="search" placeholder="Buscar producto o reserva..." />
+      <button aria-label="Buscar">&#128269;</button>
+    </div>
+    <div class="cart">🛒 Reservas</div>
+
+    <div class="user-menu">
+      <button id="userBtn" aria-haspopup="true" aria-expanded="false">
+        Perfil ▼
+      </button>
+      <ul id="userDropdown" class="dropdown-menu" aria-label="submenu" hidden>
+        <li><a href="#">Ver perfil</a></li>
+        <li><a href="#">Ajustes</a></li>
+        <li><a href="#">Cerrar sesión</a></li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+  <aside>
+    <h3>Opciones</h3>
+    <ul>
+      <li>Mis Reservas</li>
+      <li>Historial</li>
+      <li>Favoritos</li>
+    </ul>
+  </aside>
+
+  <main>
+    <h2>Formulario de Reserva</h2>
+    <form id="formReserva" action="/reservar" method="POST" style="display: flex; flex-direction: column; gap: 15px;">
+      <label>
+        Nombre completo:
+        <input type="text" name="nombre" required style="padding: 10px; width: 100%; border-radius: 5px; border: 1px solid #ccc;" />
+      </label>
+      <label>
+        Fecha de reserva:
+        <input type="date" name="fecha" required style="padding: 10px; width: 100%; border-radius: 5px; border: 1px solid #ccc;" />
+      </label>
+      <label>
+        Hora:
+        <input type="time" name="hora" required style="padding: 10px; width: 100%; border-radius: 5px; border: 1px solid #ccc;" />
+      </label>
+      <label>
+        Tipo de servicio:
+        <select name="servicio" required style="padding: 10px; border-radius: 5px; border: 1px solid #ccc;">
+          <option value="">Seleccione</option>
+          <option value="cancha">Cancha</option>
+          <option value="entrenamiento">Entrenamiento</option>
+          <option value="producto">Producto</option>
+        </select>
+      </label>
+      <button type="button" id="btnMostrarModal" class="btn-add-cart" style="width: fit-content;">Reservar ahora</button>
+      <button type="button" class="btn-add-cart" style="width: fit-content;" onclick="history.back()">Volver atrás</button>
+
+    </form>
+  </main>
+</div>
+
+<!-- Modal -->
+<div id="notificacionModal" class="modal-overlay" hidden>
+  <div class="modal-content">
+    <h3>¿Desea recibir la notificación?</h3>
+    <div class="modal-actions">
+      <button id="btnNotificar" class="btn-confirm">Sí</button>
+      <button id="btnCancelar" class="btn-cancel">No</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const form = document.getElementById('formReserva');
+  const btnMostrarModal = document.getElementById('btnMostrarModal');
+  const modal = document.getElementById('notificacionModal');
+  const btnNotificar = document.getElementById('btnNotificar');
+  const btnCancelar = document.getElementById('btnCancelar');
+
+  // Mostrar modal solo al hacer clic
+  btnMostrarModal.addEventListener('click', () => {
+    console.log("Botón Reservar presionado");
+    modal.removeAttribute('hidden');
+  });
+
+  btnNotificar.addEventListener('click', function () {
+    modal.setAttribute('hidden', '');
+    alert('Te enviaremos una notificación 😉');
+    form.submit();
+  });
+
+  btnCancelar.addEventListener('click', function () {
+    modal.setAttribute('hidden', '');
+    alert('No se enviará notificación.');
+    form.submit();
+  });
+</script>
+
+
+</body>
+</html>

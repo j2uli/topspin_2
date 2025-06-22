@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Inventario - Admin</title>
+  <link rel="stylesheet" href="/css/panel_inventario.css" />
+</head>
+<body>
+
+<aside>
+  <div>
+    <img src="/img/logo2.jpg" alt="TopSpin Logo" class="logo" />
+  </div>
+  <ul>
+    <li><a href="/PanelAdministradorCaja">Inicio</a></li>
+    <li><a href="#">Transacciones</a></li>
+    <li><a href="#">Inventario</a></li>
+    <li><a href="#">Historial</a></li>
+    <li><a href="#">Salir</a></li>
+  </ul>
+</aside>
+
+<main>
+  <header>
+    <h1>Gestión de Inventario</h1>
+    <button id="btnAgregarProducto" class="btn-agregar">+ Agregar Producto</button>
+  </header>
+  <div class="busqueda-container">
+    <input type="text" id="buscadorProducto" placeholder="🔍 Buscar por nombre o descripción...">
+  </div>
+
+  <% if (typeof query !== 'undefined') { %>
+    <% if (query.agregado) { %>
+      <div class="alerta-exito">✅ Producto agregado correctamente.</div>
+    <% } else if (query.eliminado) { %>
+      <div class="alerta-exito">🗑️ Producto eliminado correctamente.</div>
+    <% } else if (query.editado) { %>
+      <div class="alerta-exito">✅ Producto actualizado correctamente.</div>
+    <% } %>
+  <% } %>
+
+  <section class="tabla-inventario">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Categoría</th>
+          <th>Precio (Bs)</th>
+          <th>Stock</th>
+          <th>Descripción</th>
+          <th>Imagen</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% productos.forEach(producto => { %>
+          <tr>
+            <td><%= producto.id %></td>
+            <td><%= producto.nombre %></td>
+            <td><%= producto.categoria %></td>
+            <td><%= producto.precio %> Bs.</td>
+            <td><%= producto.stock %></td>
+            <td title="<%= producto.descripcion %>">
+              <%= producto.descripcion.length > 30 ? producto.descripcion.substring(0, 30) + '...' : producto.descripcion %>
+            </td>
+            <td><img src="<%= producto.imagen %>" alt="Imagen de <%= producto.nombre %>" height="50" /></td>
+            <td>
+              <button class="btn btn-ver"
+                data-id="<%= producto.id %>"
+                data-nombre="<%= producto.nombre %>"
+                data-precio="<%= producto.precio %>"
+                data-stock="<%= producto.stock %>"
+                data-descripcion="<%= producto.descripcion %>"
+                data-categoria="<%= producto.categoria %>"
+                data-imagen="<%= producto.imagen %>">👁️</button>
+
+              <button class="btn btn-editar"
+                data-id="<%= producto.id %>"
+                data-nombre="<%= producto.nombre %>"
+                data-precio="<%= producto.precio %>"
+                data-stock="<%= producto.stock %>"
+                data-descripcion="<%= producto.descripcion %>"
+                data-categoria="<%= producto.categoria %>">✏️</button>
+
+              <button type="button" class="btn btn-eliminar"
+                data-id="<%= producto.id %>">🗑️</button>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </section>
+</main>
+
+<!-- MODAL AGREGAR PRODUCTO -->
+<div class="modal" id="modalProducto">
+  <div class="modal-content">
+    <span class="close" id="cerrarModal" title="Cerrar">&times;</span>
+    <h2>Agregar Producto</h2>
+    <form action="/productos/crear" method="POST" enctype="multipart/form-data">
+      <div class="form-group">
+        <input type="text" name="nombre" placeholder="Nombre del producto" required />
+      </div>
+      <div class="form-group">
+        <input type="number" name="precio" placeholder="Precio (Bs)" step="0.01" required />
+      </div>
+      <div class="form-group">
+        <input type="number" name="stock" placeholder="Stock" min="0" required />
+      </div>
+      <div class="form-group">
+        <input type="text" name="categoria" placeholder="Categoría (ej. raquetas, pelotas...)" required />
+      </div>
+      <div class="form-group">
+        <textarea name="descripcion" placeholder="Descripción" required></textarea>
+      </div>
+      <div class="form-group">
+        <input type="file" name="imagen" accept="image/*" />
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn rojo">Guardar producto</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- MODAL EDITAR PRODUCTO -->
+<div class="modal" id="modalEditarProducto">
+  <div class="modal-content">
+    <span class="close" id="cerrarModalEditar" title="Cerrar">&times;</span>
+    <h2>Editar Producto</h2>
+    <form id="formEditarProducto" method="POST" enctype="multipart/form-data">
+      <input type="hidden" name="id" id="edit-id" />
+      <div class="form-group">
+        <input type="text" name="nombre" id="edit-nombre" required />
+      </div>
+      <div class="form-group">
+        <input type="number" name="precio" id="edit-precio" step="0.01" required />
+      </div>
+      <div class="form-group">
+        <input type="number" name="stock" id="edit-stock" min="0" required />
+      </div>
+      <div class="form-group">
+        <input type="text" name="categoria" id="edit-categoria" required />
+      </div>
+      <div class="form-group">
+        <textarea name="descripcion" id="edit-descripcion" required></textarea>
+      </div>
+      <div class="form-group">
+        <input type="file" name="imagen" accept="image/*" />
+        <small>Dejar en blanco para mantener la imagen actual</small>
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn rojo">Guardar cambios</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- MODAL CONFIRMAR ELIMINAR -->
+<div class="modal" id="modalConfirmarEliminar">
+  <div class="modal-content">
+    <h2>¿Estás seguro?</h2>
+    <p>Esta acción eliminará el producto permanentemente.</p>
+    <form id="formEliminarConfirmado" method="POST">
+      <button type="submit" class="btn rojo">Sí, eliminar</button>
+      <button type="button" id="cancelarEliminar" class="btn gris">Cancelar</button>
+    </form>
+  </div>
+</div>
+
+<!-- MODAL VER PRODUCTO -->
+<div class="modal" id="modalVerProducto">
+  <div class="modal-content">
+    <span class="close" id="cerrarModalVer" title="Cerrar">&times;</span>
+    <h2>Detalle del Producto</h2>
+    <img id="ver-imagen" src="" alt="Imagen del producto" style="max-width: 200px; margin: 10px auto; display:block;" />
+    <p><strong>ID:</strong> <span id="ver-id"></span></p>
+    <p><strong>Nombre:</strong> <span id="ver-nombre"></span></p>
+    <p><strong>Precio:</strong> <span id="ver-precio"></span> Bs.</p>
+    <p><strong>Stock:</strong> <span id="ver-stock"></span></p>
+    <p><strong>Categoría:</strong> <span id="ver-categoria"></span></p>
+    <p><strong>Descripción:</strong> <span id="ver-descripcion"></span></p>
+  </div>
+</div>
+
+<script src="/js/panel_inventario.js"></script>
+</body>
+</html>

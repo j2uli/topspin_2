@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Catálogo TopSpin Bolivia</title>
+  <link rel="stylesheet" href="/css/catalogo.css" />
+</head>
+<body>
+
+<header>
+  <div>
+    <img src="/img/logo2.jpg" alt="TopSpin Logo" class="logo" />
+  </div>
+
+  <nav>
+    <a href="#">INICIO</a>
+    <a href="#">QUIÉNES SOMOS</a>
+    <a href="#">MANTENIMIENTO</a>
+  </nav>
+
+  <div class="search-cart">
+    <div class="search-box">
+      <input type="search" placeholder="Buscar producto..." />
+      <button aria-label="Buscar">&#128269;</button>
+    </div>
+    <div class="cart">
+      🛒 Total: 0 productos
+    </div>
+
+    <div class="user-menu">
+      <button id="userBtn" aria-haspopup="true" aria-expanded="false">
+        Perfil ▼
+      </button>
+      <ul id="userDropdown" class="dropdown-menu" aria-label="submenu" hidden>
+        <li><a href="#">Ver perfil</a></li>
+        <li><a href="#">Ajustes</a></li>
+        <li><a href="#">Cerrar sesión</a></li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+  <aside>
+    <h3>Categoría</h3>
+    <ul>
+      <li>Raquetas
+        <ul>
+          <li>Raquetball</li>
+          <li>Tenis</li>
+          <li>Padel</li>
+        </ul>
+      </li>
+      <li>Cuerdas
+        <ul>
+          <li>E-Force</li>
+          <li>Wilson</li>
+          <li>Dunlop</li>
+          <li>Tecnifibre</li>
+          <li>Gama</li>
+          <li>Gearbox</li>
+        </ul>
+      </li>
+      <li>Guantes
+        <ul>
+          <li>Gearbox</li>
+          <li>E-force</li>
+          <li>Dunlop</li>
+          <li>Prokenex</li>
+        </ul>
+      </li>
+      <li>Favoritos</li>
+    </ul>
+  </aside>
+
+  <main>
+    <h2>Categoría: Raquetas - Raquetball</h2>
+    <div class="product-grid">
+
+      <% productos.forEach(producto => { %>
+        <div class="product-card">
+          <% if (producto.stock === 0) { %>
+            <div class="agotado-label">AGOTADO</div>
+          <% } %>
+          <div class="fav-icon" title="Agregar a favoritos"></div>
+          <img src="<%= producto.imagen %>" alt="<%= producto.nombre %>" />
+          <div class="product-name"><%= producto.nombre %></div>
+          <div class="product-price">Bs. <%= producto.precio %></div>
+          <button class="btn-add-cart" <%= producto.stock === 0 ? 'disabled' : '' %>>Añadir al carrito</button>
+          <div class="details-link btn-detalle"
+            data-nombre="<%= producto.nombre %>"
+            data-precio="<%= producto.precio %>"
+            data-stock="<%= producto.stock %>"
+            data-descripcion="<%= producto.descripcion %>"
+            data-imagen="<%= producto.imagen %>"
+            data-categoria="<%= producto.categoria %>">
+             Ver detalles del producto
+          </div>
+
+        </div>
+      <% }); %>
+
+      <% if (usuario) { %>
+        <div class="bienvenida">
+          Bienvenido, <%= usuario.nombre %> (<%= usuario.rol %>) 👋
+        </div>
+      <% } else { %>
+        <div class="bienvenida">
+          Bienvenido invitado 👤
+        </div>
+      <% } %>
+
+    </div>
+  </main>
+</div>
+<!-- MODAL VER DETALLE DEL PRODUCTO -->
+<div id="modalDetalleProducto" class="modal" style="display: none;">
+  <div class="modal-content">
+    <span id="cerrarModalDetalle" class="close" style="cursor: pointer; font-size: 24px; float: right;">&times;</span>
+    <h2 id="modal-nombre"></h2>
+    <img id="modal-imagen" src="" alt="" style="max-width: 200px; margin-bottom: 15px;" />
+    <p><strong>Precio:</strong> Bs. <span id="modal-precio"></span></p>
+    <p><strong>Stock:</strong> <span id="modal-stock"></span></p>
+    <p><strong>Descripción:</strong> <span id="modal-descripcion"></span></p>
+    <p><strong>Categoría:</strong> <span id="modal-categoria"></span></p>
+  </div>
+</div>
+
+<script src="/js/catalogo.js"></script>
+</body>
+</html>
