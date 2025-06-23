@@ -1,23 +1,34 @@
 const express = require('express');
 const router = express.Router();
-const Producto = require('../models/Producto'); // Importación directa del modelo
+const Producto = require('../models/Producto');
 const { Op } = require('sequelize');
 
 router.get('/', async (req, res) => {
+  const filtro = req.query.filtro || '';
+
   try {
     const productos = await Producto.findAll({
       where: {
-        stock: { [Op.gte]: 0 } // Solo productos con stock >= 0
+        nombre: {
+          [Op.like]: `%${filtro}%`
+        },
+        stock: {
+          [Op.gte]: 0
+        }
       }
     });
 
+    const totalProductos = req.session.carrito?.reduce((total, item) => total + item.cantidad, 0) || 0;
+
     res.render('catalogo', {
       productos,
-      usuario: req.session ? req.session.usuario : null
+      filtro,
+      totalProductos, // ✅ Se envía correctamente
+      usuario: req.session?.usuario || null
     });
   } catch (error) {
-    console.error('Error al cargar el catálogo:', error);
-    res.status(500).send('Error al mostrar el catálogo');
+    console.error('Error al buscar productos:', error);
+    res.status(500).send('Error del servidor');
   }
 });
 

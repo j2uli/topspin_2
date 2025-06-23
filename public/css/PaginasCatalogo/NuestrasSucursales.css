@@ -5,11 +5,11 @@
     }
 
     body {
-    background-image: url('/img/1.jpg'); /* Cambia 'fondo.jpg' por el nombre real de tu imagen */
-    background-size: cover; /* Hace que la imagen cubra toda la pantalla */
-    background-position: center center; /* Centra la imagen */
-    background-repeat: no-repeat; /* Evita que se repita */
-    background-attachment: fixed; /* Hace que el fondo no se mueva al hacer scroll */
+    background-image: url('/img/1.jpg'); 
+    background-size: cover; 
+    background-position: center center; 
+    background-repeat: no-repeat; 
+    background-attachment: fixed; 
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f5f5f0;
     color: #333;
@@ -113,8 +113,6 @@
       background-color: #b02b2b;
     }
 
-  /*SSIIIIIIII*/
-  /* Dropdown (Mega menú) */
 header .dropdown {
   position: relative;
 }
@@ -133,7 +131,6 @@ header .dropdown > a:hover {
   background-color: #b02b2b;
 }
 
-/* Ocultar por defecto */
 header .mega-menu {
   display: none;
   position: absolute;
@@ -150,12 +147,10 @@ header .mega-menu {
   border-radius: 10px;
 }
 
-/* Mostrar al hacer hover */
 header .dropdown:hover .mega-menu {
   display: flex;
 }
 
-/* Columnas del mega menú */
 header .mega-column {
   display: flex;
   flex-direction: column;
@@ -173,7 +168,6 @@ header .mega-column a {
   color: black;
   text-decoration: none;
   margin: 5px 0;
-  /*font-size: 0.9rem;*/
   transition: color 0.2s;
 }
 
@@ -181,7 +175,6 @@ header .mega-column a:hover {
   color: #d93535;
 }
 
-/*ssssss00*/
 header nav .dropdown {
   display: inline-flex;
   align-items: center;
@@ -192,10 +185,6 @@ header nav .dropdown > a {
   display: inline-block;
 }
 
-
-
-
-/*Contenido central*/
 .sucursales-section {
   background-color: #f9f6f0;
   padding: 40px 20px;
@@ -209,6 +198,9 @@ header nav .dropdown > a {
   flex-wrap: wrap;
   gap: 30px;
 }
+
+
+
 
 .sucursal-lista {
   flex: 1 1 300px;
@@ -242,7 +234,7 @@ header nav .dropdown > a {
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
-/*opcion 2 de estilo*/
+
 .sucursales-page {
   padding: 40px 20px;
   background: #f8f6f1;
@@ -319,33 +311,6 @@ header nav .dropdown > a {
 .map-buttons button:hover {
   background-color: #d62828;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /*footer o pie de pagina*/
 .site-footer {

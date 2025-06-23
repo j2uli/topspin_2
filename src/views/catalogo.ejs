@@ -7,20 +7,17 @@
   <link rel="stylesheet" href="/css/catalogo.css" />
 </head>
 <body>
-
 <header>
   <div>
     <img src="/img/logo2.jpg" alt="TopSpin Logo" class="logo" />
   </div>
 
- 
-
-
-    <a href="/Inicio" class="btn">INICIO</a>
+  <nav>
+    <a href="/sucursales" class="btn">NUESTRAS SUCURSALES</a>
     <a href="/QuienesSomos" class="btn">NOSOTROS</a>
 
     <div class="dropdown">
-      <a href="#">CATEGORÍAS</a>
+      <a>CATEGORÍAS</a>
       <div class="mega-menu">
         <div class="mega-column">
           <h4><a href="#">RAQUETAS</a></h4>
@@ -48,108 +45,45 @@
     </div>
 
     <a href="https://api.whatsapp.com/send?phone=59177799444&text=Hola,%20quiero%20más%20información%20sobre%20productos%20TopSpin"
-              target="_blank" rel="noopener noreferrer">
-              CONTACTENOS
-    </a>
+        target="_blank" rel="noopener noreferrer">CONTACTENOS</a>
     <a href="#">RESERVAS</a>
   </nav>
 
-  <div class="search-cart">
+  <!-- BARRA DE BÚSQUEDA -->
+  <form method="GET" action="/catalogo">
     <div class="search-box">
-      <input type="search" placeholder="Buscar producto..." />
+      <input 
+        type="search" 
+        name="filtro"
+        placeholder="Buscar producto..." 
+        value="<%= typeof filtro !== 'undefined' ? filtro : '' %>" />
       <button aria-label="Buscar">&#128269;</button>
     </div>
-    <div class="cart">
-      🛒 Total: 0 productos
-    </div>
+  </form>
 
-    <div class="user-menu">
+  <!-- 🛒 TOTAL CARRITO -->
+  <div class="cart">
+    🛒 Total: <%= typeof totalProductos !== 'undefined' ? totalProductos : 0 %> productos
+  </div>
+
+  <!-- MENÚ USUARIO -->
+  <div class="user-menu">
+    <% if (usuario) { %>
       <button id="userBtn" aria-haspopup="true" aria-expanded="false">
-        Perfil ▼
+        <%= usuario.nombre || 'Perfil' %> ▼
       </button>
       <ul id="userDropdown" class="dropdown-menu" aria-label="submenu" hidden>
         <li><a href="#">Ver perfil</a></li>
         <li><a href="#">Ajustes</a></li>
         <li><a href="#">Cerrar sesión</a></li>
       </ul>
-    </div>
+    <% } else { %>
+      <a href="/Login" class="btn">Iniciar Sesión</a>
+    <% } %>
   </div>
 </header>
 
 
-<div class="container">
-  <aside>
-    <h3>Categoría</h3>
-    <ul>
-      <li>Raquetas
-        <ul>
-          <li>Raquetball</li>
-          <li>Tenis</li>
-          <li>Padel</li>
-        </ul>
-      </li>
-      <li>Cuerdas
-        <ul>
-          <li>E-Force</li>
-          <li>Wilson</li>
-          <li>Dunlop</li>
-          <li>Tecnifibre</li>
-          <li>Gama</li>
-          <li>Gearbox</li>
-        </ul>
-      </li>
-      <li>Guantes
-        <ul>
-          <li>Gearbox</li>
-          <li>E-force</li>
-          <li>Dunlop</li>
-          <li>Prokenex</li>
-        </ul>
-      </li>
-      <li>Favoritos</li>
-    </ul>
-  </aside>
-
-  <main>
-    <h2>Categoría: Raquetas - Raquetball</h2>
-    <div class="product-grid">
-
-      <% productos.forEach(producto => { %>
-        <div class="product-card">
-          <% if (producto.stock === 0) { %>
-            <div class="agotado-label">AGOTADO</div>
-          <% } %>
-          <div class="fav-icon" title="Agregar a favoritos"></div>
-          <img src="<%= producto.imagen %>" alt="<%= producto.nombre %>" />
-          <div class="product-name"><%= producto.nombre %></div>
-          <div class="product-price">Bs. <%= producto.precio %></div>
-          <button class="btn-add-cart" <%= producto.stock === 0 ? 'disabled' : '' %>>Añadir al carrito</button>
-          <div class="details-link btn-detalle"
-            data-nombre="<%= producto.nombre %>"
-            data-precio="<%= producto.precio %>"
-            data-stock="<%= producto.stock %>"
-            data-descripcion="<%= producto.descripcion %>"
-            data-imagen="<%= producto.imagen %>"
-            data-categoria="<%= producto.categoria %>">
-             Ver detalles del producto
-          </div>
-
-        </div>
-      <% }); %>
-
-      <% if (usuario) { %>
-        <div class="bienvenida">
-          Bienvenido, <%= usuario.nombre %> (<%= usuario.rol %>) 👋
-        </div>
-      <% } else { %>
-        <div class="bienvenida">
-          Bienvenido invitado 👤
-        </div>
-      <% } %>
-
-    </div>
-  </main>
-</div>
 <!-- MODAL VER DETALLE DEL PRODUCTO -->
 <div id="modalDetalleProducto" class="modal" style="display: none;">
   <div class="modal-content">
@@ -201,8 +135,96 @@
   <div class="split-image">
     <img src="/img/PADEL.jpg" alt="Colección de verano">
   </div>
+  
 </section>
+<div>
+  
+<div class="container">
+  <aside>
+    <h3>Categoría</h3>
+    <ul>
+      <li>Raquetas
+        <ul>
+          <li>Raquetball</li>
+          <li>Tenis</li>
+          <li>Padel</li>
+        </ul>
+      </li>
+      <li>Cuerdas
+        <ul>
+          <li>E-Force</li>
+          <li>Wilson</li>
+          <li>Dunlop</li>
+          <li>Tecnifibre</li>
+          <li>Gama</li>
+          <li>Gearbox</li>
+        </ul>
+      </li>
+      <li>Guantes
+        <ul>
+          <li>Gearbox</li>
+          <li>E-force</li>
+          <li>Dunlop</li>
+          <li>Prokenex</li>
+        </ul>
+      </li>
+      <li>Favoritos</li>
+    </ul>
+  </aside>
 
+  <main>
+<h2>Productos de TopSpin</h2>
+<div class="product-card">
+  <% if (producto.stock === 0) { %>
+    <div class="agotado-label">AGOTADO</div>
+  <% } %>
+
+  <img src="<%= producto.imagen %>" alt="<%= producto.nombre %>" />
+  <div class="product-name"><%= producto.nombre %></div>
+  <div class="product-price">Bs. <%= producto.precio %></div>
+
+  <div class="cantidad-container">
+    <button type="button" class="btn-decrementar">−</button>
+    <input 
+      type="number" 
+      name="cantidad" 
+      value="1" 
+      min="1" 
+      max="<%= producto.stock %>" />
+    <button type="button" class="btn-incrementar">+</button>
+  </div>
+
+  <button 
+    type="button"
+    class="btn-add-cart"
+    data-id="<%= producto.id %>"
+    data-stock="<%= producto.stock %>">
+    Añadir al carrito
+  </button>
+</div>
+
+
+  <div class="details-link btn-detalle"
+    data-nombre="<%= producto.nombre %>"
+    data-precio="<%= producto.precio %>"
+    data-stock="<%= producto.stock %>"
+    data-descripcion="<%= producto.descripcion %>"
+    data-imagen="<%= producto.imagen %>"
+    data-categoria="<%= producto.categoria %>">
+    Ver detalles del producto
+  </div>
+</div>
+
+    <% }); %>
+  <% } else { %>
+    <p>No se encontraron productos con ese nombre.</p>
+  <% } %>
+</div>
+      
+  </main>
+</div>
+</div>
+<br><br>
 <footer class="site-footer">
   <div class="footer-container">
     <div class="footer-column logo-col">
@@ -262,6 +284,8 @@
     © TopSpin Bolivia 2025. Todos los derechos reservados.
   </div>
 </footer>
+<script src="/js/carrito.js"></script>
+
 
 </body>
 </html>

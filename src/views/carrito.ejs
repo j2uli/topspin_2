@@ -1,0 +1,17 @@
+<h2>Tu carrito</h2>
+<ul>
+  <% carrito.forEach((item, index) => { %>
+    <li>
+      <strong><%= item.nombre %></strong> - 
+      $<%= item.precio %> x <%= item.cantidad %>
+      <form method="POST" action="/carrito/actualizar" style="display: inline;">
+        <input type="hidden" name="index" value="<%= index %>">
+        <button name="accion" value="menos">-</button>
+        <button name="accion" value="mas">+</button>
+      </form>
+    </li>
+  <% }) %>
+</ul>
+<form method="POST" action="/carrito/comprar">
+  <button>Finalizar compra</button>
+</form>

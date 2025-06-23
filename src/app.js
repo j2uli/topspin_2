@@ -1,15 +1,11 @@
 const express = require('express');
-
 const session = require('express-session');
-const app = express();
+const path = require('path');
 const sequelize = require('./config/database');
 
-// Importamos rutas
-const userRoutes = require('./routes/userRoutes');
-const productoRoutes = require('./routes/productoRoutes');
-const catalogoRoutes = require('./routes/catalogoRoutes');
+const app = express();
 
-// Configuración de sesión
+// Configuración de sesión (debe estar antes de las rutas)
 app.use(session({
   secret: 'topspin_secreto_seguro',
   resave: false,
@@ -17,28 +13,27 @@ app.use(session({
 }));
 
 // Configuración de EJS
-
-const sequelize = require('./config/database');
-const userRoutes = require('./routes/userRoutes');
-const path = require('path');
-
-// Configuración de EJS
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-app.set('views', './src/views');
 
 // Middlewares
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(express.static('public'));
 
+// Importación de rutas
+const userRoutes = require('./routes/userRoutes');
+const productoRoutes = require('./routes/productoRoutes');
+const catalogoRoutes = require('./routes/catalogoRoutes');
+const carritoRoutes = require('./routes/carritoRoutes');
 
-// Rutas
+// Uso de rutas
 app.use('/catalogo', catalogoRoutes);
 app.use('/productos', productoRoutes);
-app.use(userRoutes); // incluye login, registro, etc.
+app.use('/carrito', carritoRoutes);
+app.use(userRoutes);
 
-// Vistas
+// Vistas principales
 app.get('/', (req, res) => {
   res.render('index');
 });
@@ -51,10 +46,42 @@ app.get('/PanelAdministradorCaja', (req, res) => {
   res.render('PanelAdministradorCaja');
 });
 
-// Conexión
+app.get('/Login', (req, res) => {
+  res.render('login');
+});
 
-// RUTAS (debe ir antes del listen)
-app.use(userRoutes);
+app.get('/Inicio', (req, res) => {
+  res.render('catalogo');
+});
+
+app.get('/sucursales', (req, res) => {
+  res.render('PaginasCatalogo/NuestrasSucursales');
+});
+
+// Páginas "¿Quiénes Somos?" y otras informativas
+app.get('/QuienesSomos', (req, res) => {
+  res.render('PaginasQuienesSomos/QuienesSomos');
+});
+
+app.get('/ComoComprar', (req, res) => {
+  res.render('PaginasQuienesSomos/ComoComprar');
+});
+
+app.get('/PlazoDeEntrega', (req, res) => {
+  res.render('PaginasQuienesSomos/PlazoDeEntrega');
+});
+
+app.get('/CambiosYDevoluciones', (req, res) => {
+  res.render('PaginasQuienesSomos/CambiosYDevoluciones');
+});
+
+app.get('/TerminosYCondiciones', (req, res) => {
+  res.render('PaginasQuienesSomos/TerminosYCondiciones');
+});
+
+app.get('/PoliticasDePrivacidad', (req, res) => {
+  res.render('PaginasQuienesSomos/PoliticasYPrivacidad');
+});
 
 // Conexión a la base de datos y arranque del servidor
 sequelize.sync()
@@ -65,64 +92,3 @@ sequelize.sync()
     });
   })
   .catch((err) => console.error('Error al conectar a la base de datos', err));
-
-
-// Usar las rutas de usuario (login, register, catalogo)
-app.get('/', (req, res) => {
-  res.render('index'); // Esto falla si index.ejs no existe
-});
-
-
-
-//ruta para la pagina de reservas
-app.get('/FormularioReservas', (req, res) => {
-  res.render('FormularioReservas');  // Esto renderiza la vista "FormularioReservas.ejs"
-});
-
-//Ruta de la interfaz del administrador de la caja
-app.get('/PanelAdministradorCaja', (req, res) => {
-  res.render('PanelAdministradorCaja');  // Renderiza la vista "PanelAdministradorCaja.ejs"
-});
-
-//Ruta para Sucursales
-
-
-//ruta para el login
-app.get('/Login', (req, res) => {
-  res.render('login');
-});
-
-app.get('/Inicio', (req, res) => {
-  res.render('catalogo');
-});
-
-//Ruta para Sucursales
-app.get('/sucursales', (req, res) => {
-  res.render('PaginasCatalogo/NuestrasSucursales');
-});
-
-
-//ruta quienes somos
-app.get('/QuienesSomos', (req, res) => {
-  res.render('PaginasQuienesSomos/QuienesSomos');
-});
-app.get('/ComoComprar', (req, res) => {
-  res.render('PaginasQuienesSomos/ComoComprar');
-});
-app.get('/PlazoDeEntrega', (req, res) => {
-  res.render('PaginasQuienesSomos/PlazoDeEntrega');
-});
-app.get('/CambiosYDevoluciones', (req, res) => {
-  res.render('PaginasQuienesSomos/CambiosYDevoluciones');
-});
-app.get('/TerminosYCondiciones', (req, res) => {
-  res.render('PaginasQuienesSomos/TerminosYCondiciones');
-});
-app.get('/PoliticasDePrivacidad', (req, res) => {
-  res.render('PaginasQuienesSomos/PoliticasYPrivacidad');
-});
-//RUTAS PARA VER TODO EN QUIEENS SOMOS
-
-
-
-
