@@ -24,3 +24,16 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const userBtn = document.getElementById('userBtn');
+    const dropdown = document.getElementById('userDropdown');
+
+    if (userBtn && dropdown) {
+      userBtn.addEventListener('click', () => {
+        dropdown.hidden = !dropdown.hidden;
+      });
+    }
+  });
+
+

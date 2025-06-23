@@ -7,6 +7,47 @@ router.get('/login', (req, res) => {
   res.render('login', { notificacion: null });
 });
 
+// Procesar login
+router.post('/login', async (req, res) => {
+  const { correo, contraseña, rol } = req.body;
+
+  try {
+    const usuario = await Usuario.findOne({ where: { correo, rol } });
+
+    if (!usuario || usuario.contraseña !== contraseña) {
+      return res.render('login', {
+        notificacion: {
+          tipo: 'error',
+          mensaje: 'Correo, contraseña o rol incorrecto.'
+        }
+      });
+    }
+
+    // Guardar en sesión
+    req.session.usuario = {
+      id: usuario.id,
+      nombre: usuario.nombre,
+      correo: usuario.correo,
+      rol: usuario.rol
+    };
+
+    if (usuario.rol === 'cliente') {
+      return res.redirect('/catalogo');
+    } else {
+      return res.redirect('/PanelAdministradorCaja');
+    }
+
+  } catch (error) {
+    console.error('Error en login:', error);
+    return res.render('login', {
+      notificacion: {
+        tipo: 'error',
+        mensaje: 'Error del servidor. Intenta más tarde.'
+      }
+    });
+  }
+});
+
 // Mostrar formulario de registro
 router.get('/register', (req, res) => {
   const hoy = new Date().toISOString().split('T')[0];
@@ -41,71 +82,15 @@ router.post('/register', async (req, res) => {
   }
 });
 
-// Procesar login
-router.post('/login', async (req, res) => {
-  const { correo, contraseña, rol } = req.body;
-
-  try {
-    const usuario = await Usuario.findOne({ where: { correo, rol } });
-    console.log('Usuario encontrado:', usuario);
-
-    if (!usuario || usuario.contraseña !== contraseña) {
-      return res.render('login', {
-        notificacion: {
-          tipo: 'error',
-          mensaje: 'Correo, contraseña o rol incorrecto.'
-        }
-      });
-    }
-
-    // Guardar datos de sesión
-    req.session.usuario = {
-      id: usuario.id,
-      nombre: usuario.nombre,
-      correo: usuario.correo,
-      rol: usuario.rol
-    };
-
-    // Redirección según rol
-    if (usuario.rol === 'cliente') {
+// Cerrar sesión
+router.post('/logout', (req, res) => {
+  req.session.destroy(err => {
+    if (err) {
+      console.error('Error al cerrar sesión:', err);
       return res.redirect('/catalogo');
-    } else {
-      return res.redirect('/PanelAdministradorCaja');
     }
-
-  } catch (error) {
-    console.error('Error en login:', error);
-    return res.render('login', {
-      notificacion: {
-        tipo: 'error',
-        mensaje: 'Error del servidor. Intenta más tarde.'
-      }
-    });
-  }
+    res.redirect('/Login');
+  });
 });
 
 module.exports = router;
-const userController = require('../controllers/userController');
-
-// LOGIN
-router.get('/login', userController.mostrarLogin);
-router.post('/login', userController.loginUsuario);
-
-// REGISTER
-router.get('/register', userController.mostrarRegister);
-router.post('/register', userController.registrarUsuario);
-
-router.get('/catalogo', (req, res) => {
-  const productos = [
-    { nombre: 'Raqueta TopSpin 3000', precio: 300, imagen: '/img/raqueta1.jpg' },
-    { nombre: 'Guante Gearbox Elite', precio: 85, imagen: '/img/guante1.jpg' }
-  ];
-  const usuario = { nombre: 'Flavio', rol: 'admin' }; // o null si no quieres mostrarlo
-  res.render('catalogo', { productos, usuario });
-});
-
-module.exports = router;
-
-
-
-

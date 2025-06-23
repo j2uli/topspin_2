@@ -1,0 +1,269 @@
+body{
+    background-image: url('/img/1.jpg'); 
+    background-size: cover; 
+    background-position: center center; 
+    background-repeat: no-repeat; 
+    background-attachment: fixed; 
+}
+.carrito-container {
+  background-color: transparent;
+  padding: 2rem;
+  border-radius: 10px;
+  margin: 2rem auto;
+  width: 95%;
+  max-width: 1100px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  color: white;
+}
+
+h1 {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #333;
+}
+
+.tabla-carrito {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.5rem;
+}
+
+.tabla-carrito th, .tabla-carrito td {
+  border-bottom: 1px solid #ddd;
+  padding: 12px;
+  text-align: center;
+}
+
+.tabla-carrito th {
+  background-color: #e53935;
+  color: white;
+}
+
+.producto-img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.btn-cantidad {
+  padding: 4px 8px;
+  margin: 0 4px;
+  background-color: #2196f3;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-eliminar {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.resumen-carrito {
+  text-align: right;
+  padding-right: 2rem;
+}
+
+.btn-pagar {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.btn-volver{
+    background-color: #2196f3;
+  color: white;
+  padding: 8px 16px;
+  margin-bottom: 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  margin-right: 1rem;
+}
+ .btn-vaciar {
+  background-color: yellowgreen;
+  color: white;
+  padding: 8px 16px;
+  margin-bottom: 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  margin-right: 1rem;
+}
+
+.acciones-carrito {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.carrito-vacio {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #666;
+}
+
+/* Estilos para el modal */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal.hidden {
+  display: none;
+}
+
+.modal-content {
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  max-width: 500px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
+.modal-content h2 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.modal-content h3 {
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.metodos {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin: 20px 0;
+}
+
+.metodos button {
+  padding: 15px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+.metodos button:hover {
+  background-color: #0056b3;
+}
+
+.qr-img {
+  max-width: 200px;
+  height: auto;
+  margin: 20px 0;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+}
+
+#comprobanteInput {
+  margin: 15px 0;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  width: 100%;
+}
+
+#btn-enviar-comprobante {
+  background-color: #28a745;
+  color: white;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 15px;
+}
+
+#btn-enviar-comprobante:hover {
+  background-color: #218838;
+}
+
+#mensaje-final {
+  text-align: center;
+}
+
+#mensaje-final h3 {
+  color: #28a745;
+  margin-bottom: 20px;
+}
+
+#mensaje-final button {
+  background-color: #6c757d;
+  color: white;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+#mensaje-final button:hover {
+  background-color: #5a6268;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .modal-content {
+    width: 95%;
+    padding: 20px;
+  }
+  
+  .metodos {
+    gap: 10px;
+  }
+  
+  .metodos button {
+    padding: 12px 15px;
+    font-size: 14px;
+  }
+}
+.btn-pago {
+  padding: 10px 20px;
+  background-color: #28a745;
+  color: white;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}

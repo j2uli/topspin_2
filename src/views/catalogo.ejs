@@ -49,7 +49,7 @@
     <a href="#">RESERVAS</a>
   </nav>
 
-  <!-- BARRA DE BÚSQUEDA -->
+ 
   <form method="GET" action="/catalogo">
     <div class="search-box">
       <input 
@@ -61,30 +61,34 @@
     </div>
   </form>
 
-  <!-- 🛒 TOTAL CARRITO -->
-  <div class="cart">
-    🛒 Total: <%= typeof totalProductos !== 'undefined' ? totalProductos : 0 %> productos
-  </div>
+  <a href="/carrito" class="cart">
+  🛒 Total: <%= typeof totalProductos !== 'undefined' ? totalProductos : 0 %> productos
+</a>
 
-  <!-- MENÚ USUARIO -->
-  <div class="user-menu">
-    <% if (usuario) { %>
-      <button id="userBtn" aria-haspopup="true" aria-expanded="false">
-        <%= usuario.nombre || 'Perfil' %> ▼
-      </button>
-      <ul id="userDropdown" class="dropdown-menu" aria-label="submenu" hidden>
-        <li><a href="#">Ver perfil</a></li>
-        <li><a href="#">Ajustes</a></li>
-        <li><a href="#">Cerrar sesión</a></li>
-      </ul>
-    <% } else { %>
-      <a href="/Login" class="btn">Iniciar Sesión</a>
-    <% } %>
-  </div>
+<div class="user-menu">
+  <% if (usuario) { %>
+    <button id="userBtn" aria-haspopup="true" aria-expanded="false">
+      <%= usuario.nombre || 'Perfil' %> ▼
+    </button>
+    <ul id="userDropdown" class="dropdown-menu" aria-label="submenu" hidden>
+      <li><a href="#">Ver perfil</a></li>
+      <li><a href="#">Ajustes</a></li>
+      <li>
+        <form action="/logout" method="POST" style="margin: 0;">
+          <button type="submit" >
+            Cerrar sesión
+          </button>
+        </form>
+      </li>
+    </ul>
+  <% } else { %>
+    <a href="/Login" class="btn">Iniciar Sesión</a>
+  <% } %>
+</div>
+  
+
 </header>
 
-
-<!-- MODAL VER DETALLE DEL PRODUCTO -->
 <div id="modalDetalleProducto" class="modal" style="display: none;">
   <div class="modal-content">
     <span id="cerrarModalDetalle" class="close" style="cursor: pointer; font-size: 24px; float: right;">&times;</span>
@@ -181,7 +185,8 @@
           <div class="agotado-label">AGOTADO</div>
         <% } %>
         
-        <div class="fav-icon" title="Agregar a favoritos">♡</div>
+
+        <div class="fav-icon" title="Agregar a favoritos"></div>
         
         <img src="<%= producto.imagen %>" alt="<%= producto.nombre %>" />
         
@@ -206,8 +211,6 @@
             >
             <button type="button" class="btn-incrementar" <%= producto.stock === 0 ? 'disabled' : '' %>>+</button>
           </div>
-          
-       
         </form>
 
         <div class="details-link btn-detalle"
@@ -226,8 +229,7 @@
       <p>No se encontraron productos con ese nombre.</p>
     </div>
   <% } %>
-</div>      
-  </main>
+</div>  </main>
 </div>
 </div>
 <br><br>
@@ -291,6 +293,7 @@
   </div>
 </footer>
 <script src="/js/carrito.js"></script>
+
 
 
 </body>

@@ -1,17 +1,92 @@
-<h2>Tu carrito</h2>
-<ul>
-  <% carrito.forEach((item, index) => { %>
-    <li>
-      <strong><%= item.nombre %></strong> - 
-      $<%= item.precio %> x <%= item.cantidad %>
-      <form method="POST" action="/carrito/actualizar" style="display: inline;">
-        <input type="hidden" name="index" value="<%= index %>">
-        <button name="accion" value="menos">-</button>
-        <button name="accion" value="mas">+</button>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Carrito de Compras - TopSpin</title>
+  <link rel="stylesheet" href="/css/carrito.css">
+</head>
+<section class="carrito-container">
+  <h1>🛒 Mi Carrito</h1>
+
+  <div class="acciones-carrito">
+    <a href="/catalogo" class="btn-volver">← Seguir comprando</a>
+    <% if (carrito.length > 0) { %>
+      <form action="/carrito/vaciar" method="POST">
+        <button class="btn-vaciar" title="Vaciar carrito">🗑 Vaciar carrito</button>
       </form>
-    </li>
-  <% }) %>
-</ul>
-<form method="POST" action="/carrito/comprar">
-  <button>Finalizar compra</button>
-</form>
+    <% } %>
+  </div>
+
+  <% if (carrito.length > 0) { %>
+    <table class="tabla-carrito">
+      <thead>
+        <tr>
+          <th>Producto</th>
+          <th>Imagen</th>
+          <th>Cantidad</th>
+          <th>Precio Unitario</th>
+          <th>Subtotal</th>
+          <th>Eliminar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% carrito.forEach((item, i) => { %>
+          <tr>
+            <td><%= item.nombre %></td>
+            <td><img src="<%= item.imagen %>" alt="<%= item.nombre %>" class="producto-img"></td>
+            <td>
+              <form action="/carrito/actualizar" method="POST" class="form-cantidad">
+                <input type="hidden" name="index" value="<%= i %>">
+                <button type="submit" name="accion" value="menos" class="btn-cantidad">−</button>
+                <span><%= item.cantidad %></span>
+                <button type="submit" name="accion" value="mas" class="btn-cantidad">+</button>
+              </form>
+            </td>
+            <td>$<%= item.precio.toFixed(2) %></td>
+            <td>$<%= (item.precio * item.cantidad).toFixed(2) %></td>
+            <td>
+              <form action="/carrito/eliminar/<%= i %>" method="POST">
+                <button class="btn-eliminar">Eliminar</button>
+              </form>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+
+    <div class="resumen-carrito">
+      <p><strong>Total productos:</strong> <%= totalProductos %></p>
+      <p><strong>Total a pagar:</strong> $<%= totalPrecio.toFixed(2) %></p>
+      <button id="btn-pagar" class="btn-pago">Realizar pago</button>
+    </div>
+  <% } else { %>
+    <p class="carrito-vacio">Tu carrito está vacío.</p>
+  <% } %>
+</section>
+<div id="modalPago" class="modal hidden">
+  <div class="modal-content">
+    <h2>Método de Pago</h2>
+    <p>¿Cómo deseas pagar?</p>
+    <div class="metodos" id="metodos">
+      <button id="btn-qr">Pago con QR</button>
+      <button id="btn-tienda">Pago en Tienda</button>
+    </div>
+
+    <div id="qr-section" class="hidden">
+      <h3>Escanea el código QR</h3>
+      <img src="/img/Qr.png" alt="Código QR" class="qr-img">
+      <p>Sube el comprobante de pago:</p>
+      <input type="file" id="comprobanteInput" accept="image/*">
+      <button id="btn-enviar-comprobante">Listo</button>
+    </div>
+
+    <div id="mensaje-final" class="hidden">
+      <h3>✅ Compra realizada con éxito</h3>
+      <button onclick="cerrarModal()">Cerrar</button>
+    </div>
+  </div>
+</div>
+<script src="/js/pago.js"></script>
+
+</body>
+</html>

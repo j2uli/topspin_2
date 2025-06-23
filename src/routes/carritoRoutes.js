@@ -10,6 +10,26 @@ function checkLogin(req, res, next) {
   next();
 }
 
+router.get('/', checkLogin, (req, res) => {
+  const carrito = req.session.carrito || [];
+  const totalProductos = carrito.reduce((total, item) => total + item.cantidad, 0);
+  const totalPrecio = carrito.reduce((total, item) => total + (item.precio * item.cantidad), 0);
+
+  res.render('carrito', {
+    carrito,
+    totalProductos,
+    totalPrecio,
+    usuario: req.session.usuario
+  });
+});
+
+router.post('/eliminar', (req, res) => {
+  const { productoId } = req.body;
+  req.session.carrito = (req.session.carrito || []).filter(p => p.id != productoId);
+  res.redirect('/carrito');
+});
+
+
 // Ver el carrito
 router.get('/', checkLogin, (req, res) => {
   const carrito = req.session.carrito || [];
