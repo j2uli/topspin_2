@@ -173,54 +173,60 @@
   </aside>
 
   <main>
-<h2>Productos de TopSpin</h2>
-<div class="product-card">
-  <% if (producto.stock === 0) { %>
-    <div class="agotado-label">AGOTADO</div>
-  <% } %>
+<div class="product-grid">
+  <% if (productos && productos.length > 0) { %>
+    <% productos.forEach(producto => { %>
+      <div class="product-card" data-id="<%= producto.id %>">
+        <% if (producto.stock === 0) { %>
+          <div class="agotado-label">AGOTADO</div>
+        <% } %>
+        
+        <div class="fav-icon" title="Agregar a favoritos">♡</div>
+        
+        <img src="<%= producto.imagen %>" alt="<%= producto.nombre %>" />
+        
+        <div class="product-info">
+          <div class="product-name"><%= producto.nombre %></div>
+          <div class="product-price">Bs. <%= producto.precio %></div>
+          <div class="product-stock">Stock: <%= producto.stock %></div>
+        </div>
 
-  <img src="<%= producto.imagen %>" alt="<%= producto.nombre %>" />
-  <div class="product-name"><%= producto.nombre %></div>
-  <div class="product-price">Bs. <%= producto.precio %></div>
+        <form class="add-to-cart-form">
+          <input type="hidden" name="productoId" value="<%= producto.id %>">
+          
+          <div class="cantidad-container">
+            <button type="button" class="btn-decrementar" <%= producto.stock === 0 ? 'disabled' : '' %>>−</button>
+            <input 
+              type="number" 
+              name="cantidad" 
+              value="1" 
+              min="1" 
+              max="<%= producto.stock %>"
+              <%= producto.stock === 0 ? 'disabled' : '' %>
+            >
+            <button type="button" class="btn-incrementar" <%= producto.stock === 0 ? 'disabled' : '' %>>+</button>
+          </div>
+          
+       
+        </form>
 
-  <div class="cantidad-container">
-    <button type="button" class="btn-decrementar">−</button>
-    <input 
-      type="number" 
-      name="cantidad" 
-      value="1" 
-      min="1" 
-      max="<%= producto.stock %>" />
-    <button type="button" class="btn-incrementar">+</button>
-  </div>
-
-  <button 
-    type="button"
-    class="btn-add-cart"
-    data-id="<%= producto.id %>"
-    data-stock="<%= producto.stock %>">
-    Añadir al carrito
-  </button>
-</div>
-
-
-  <div class="details-link btn-detalle"
-    data-nombre="<%= producto.nombre %>"
-    data-precio="<%= producto.precio %>"
-    data-stock="<%= producto.stock %>"
-    data-descripcion="<%= producto.descripcion %>"
-    data-imagen="<%= producto.imagen %>"
-    data-categoria="<%= producto.categoria %>">
-    Ver detalles del producto
-  </div>
-</div>
-
+        <div class="details-link btn-detalle"
+          data-nombre="<%= producto.nombre %>"
+          data-precio="<%= producto.precio %>"
+          data-stock="<%= producto.stock %>"
+          data-descripcion="<%= producto.descripcion %>"
+          data-imagen="<%= producto.imagen %>"
+          data-categoria="<%= producto.categoria %>">
+          Ver detalles del producto
+        </div>
+      </div>
     <% }); %>
   <% } else { %>
-    <p>No se encontraron productos con ese nombre.</p>
+    <div class="no-productos">
+      <p>No se encontraron productos con ese nombre.</p>
+    </div>
   <% } %>
-</div>
-      
+</div>      
   </main>
 </div>
 </div>

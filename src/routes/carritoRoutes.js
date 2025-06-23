@@ -5,7 +5,7 @@ const Producto = require('../models/Producto');
 // Middleware para verificar sesión iniciada
 function checkLogin(req, res, next) {
   if (!req.session.usuario) {
-    return res.redirect('/login'); // Ajusta esto a tu ruta de login
+    return res.redirect('/login');
   }
   next();
 }
@@ -14,63 +14,104 @@ function checkLogin(req, res, next) {
 router.get('/', checkLogin, (req, res) => {
   const carrito = req.session.carrito || [];
   const totalProductos = carrito.reduce((total, item) => total + item.cantidad, 0);
+  const totalPrecio = carrito.reduce((total, item) => total + (item.precio * item.cantidad), 0);
 
   res.render('carrito', {
     carrito,
     totalProductos,
+    totalPrecio,
     usuario: req.session.usuario
   });
 });
 
-// Agregar al carrito
+// Agregar al carrito - ÚNICA RUTA
 router.post('/agregar', async (req, res) => {
   const { productoId, cantidad } = req.body;
-
+  
+  // Convertir a números y validar
   const id = parseInt(productoId, 10);
-  const qty = parseInt(cantidad, 10);
+  const qty = parseInt(cantidad, 10) || 1;
 
-  // Validación para evitar el error de NaN en la consulta
-  if (isNaN(id) || isNaN(qty)) {
-    return res.status(400).json({ error: 'Datos inválidos: productoId o cantidad no son números' });
+  if (isNaN(id) || qty <= 0) {
+    if (req.headers['content-type'] === 'application/json') {
+      return res.status(400).json({ error: 'Datos inválidos' });
+    }
+    return res.status(400).send('Datos inválidos');
   }
 
   try {
     const producto = await Producto.findByPk(id);
 
     if (!producto) {
-      return res.status(404).json({ error: 'Producto no encontrado' });
+      if (req.headers['content-type'] === 'application/json') {
+        return res.status(404).json({ error: 'Producto no encontrado' });
+      }
+      return res.status(404).send('Producto no encontrado');
     }
 
+    // Verificar stock disponible
+    if (producto.stock < qty) {
+      if (req.headers['content-type'] === 'application/json') {
+        return res.status(400).json({ error: 'Stock insuficiente' });
+      }
+      return res.status(400).send('Stock insuficiente');
+    }
+
+    // Inicializar carrito si no existe
     if (!req.session.carrito) {
       req.session.carrito = [];
     }
 
     const carrito = req.session.carrito;
-
     const productoExistente = carrito.find(p => p.id === id);
 
     if (productoExistente) {
-      productoExistente.cantidad += qty;
+      // Verificar que no exceda el stock al sumar
+      const nuevaCantidad = productoExistente.cantidad + qty;
+      if (nuevaCantidad > producto.stock) {
+        if (req.headers['content-type'] === 'application/json') {
+          return res.status(400).json({ error: 'Cantidad excede stock disponible' });
+        }
+        return res.status(400).send('Cantidad excede stock disponible');
+      }
+      productoExistente.cantidad = nuevaCantidad;
     } else {
       carrito.push({
         id: producto.id,
         nombre: producto.nombre,
-        precio: producto.precio,
-        cantidad: qty
+        precio: parseFloat(producto.precio),
+        imagen: producto.imagen,
+        cantidad: qty,
+        stock: producto.stock
       });
     }
 
     req.session.carrito = carrito;
+    const totalProductos = carrito.reduce((acc, p) => acc + p.cantidad, 0);
 
-    res.json({ success: true, total: carrito.reduce((acc, p) => acc + p.cantidad, 0) });
+    // Responder según el tipo de petición
+    if (req.headers['content-type'] === 'application/json') {
+      res.json({ 
+        success: true, 
+        total: totalProductos,
+        message: 'Producto agregado al carrito'
+      });
+    } else {
+      res.redirect('/catalogo');
+    }
 
   } catch (error) {
     console.error('Error al agregar al carrito:', error);
-    res.status(500).json({ error: 'Error interno del servidor' });
+    
+    if (req.headers['content-type'] === 'application/json') {
+      res.status(500).json({ error: 'Error interno del servidor' });
+    } else {
+      res.status(500).send('Error al agregar producto');
+    }
   }
 });
 
-// Actualizar cantidad (más o menos)
+// Actualizar cantidad en el carrito
 router.post('/actualizar', checkLogin, (req, res) => {
   const { index, accion } = req.body;
   const carrito = req.session.carrito;
@@ -80,7 +121,10 @@ router.post('/actualizar', checkLogin, (req, res) => {
   }
 
   if (accion === 'mas') {
-    carrito[index].cantidad += 1;
+    // Verificar stock antes de incrementar
+    if (carrito[index].cantidad < carrito[index].stock) {
+      carrito[index].cantidad += 1;
+    }
   } else if (accion === 'menos') {
     carrito[index].cantidad -= 1;
     if (carrito[index].cantidad <= 0) {
@@ -95,53 +139,18 @@ router.post('/actualizar', checkLogin, (req, res) => {
 // Eliminar producto del carrito
 router.post('/eliminar/:index', checkLogin, (req, res) => {
   const index = parseInt(req.params.index, 10);
+  
   if (!isNaN(index) && req.session.carrito && req.session.carrito[index]) {
     req.session.carrito.splice(index, 1);
   }
+  
   res.redirect('/carrito');
 });
 
-router.post('/agregar', async (req, res) => {
-  const { productoId, cantidad } = req.body;
-  const id = parseInt(productoId, 10);
-  const qty = parseInt(cantidad, 10);
-
-  try {
-    const producto = await Producto.findByPk(id);
-
-    if (!producto || producto.stock < qty) {
-      return res.status(400).send('Producto no disponible o cantidad inválida');
-    }
-
-    if (!req.session.carrito) req.session.carrito = [];
-
-    const index = req.session.carrito.findIndex(item => item.id === id);
-
-    if (index !== -1) {
-      // Si ya existe, aumentar la cantidad solo si hay stock suficiente
-      const newQty = req.session.carrito[index].cantidad + qty;
-      if (newQty <= producto.stock) {
-        req.session.carrito[index].cantidad = newQty;
-      } else {
-        return res.status(400).send('Cantidad excede el stock disponible');
-      }
-    } else {
-      // Si no existe, agregar nuevo
-      req.session.carrito.push({
-        id: producto.id,
-        nombre: producto.nombre,
-        precio: producto.precio,
-        imagen: producto.imagen,
-        cantidad: qty
-      });
-    }
-
-    res.redirect('/catalogo');
-  } catch (error) {
-    console.error('Error al agregar al carrito:', error);
-    res.status(500).send('Error al agregar producto');
-  }
+// Vaciar carrito completo
+router.post('/vaciar', checkLogin, (req, res) => {
+  req.session.carrito = [];
+  res.redirect('/carrito');
 });
-
 
 module.exports = router;
